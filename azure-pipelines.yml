@@ -2,19 +2,17 @@ trigger:
   - master
 
 variables:
-  nlw_token:
+  nlw_token: $(secret_nlw_token)
 
 resources:
   containers:
   - container: neoload_ctrl
     image: neotys/neoload-controller:latest
-    env: { NEOLOADWEB_TOKEN: $(nlw_token) }
+    env: { MODE: Managed, NEOLOADWEB_TOKEN: $(nlw_token) }
   - container: lg1
     image: neotys/neoload-loadgenerator:latest
+    env: { NEOLOADWEB_TOKEN: $(nlw_token) }
     options: -p 7101:7100
-  - container: lg2
-    image: neotys/neoload-loadgenerator:latest
-    options: -p 7102:7100
 
 pool:
   vmImage: 'ubuntu-16.04'
