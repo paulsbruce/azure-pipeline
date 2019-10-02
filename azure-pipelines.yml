@@ -21,7 +21,6 @@ container: neoload_ctrl
 
 services:
   lg1: lg1
-  lg2: lg2
 
 steps:
 - bash: |
@@ -29,4 +28,3 @@ steps:
     pwd
     apt install -y net-tools
     nslookup lg1
-    nslookup lg2
