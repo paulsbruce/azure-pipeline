@@ -50,6 +50,8 @@ steps:
 
       cp -R $(wksp)/neoload-report $(Build.ArtifactStagingDirectory)
 
+# above could be improved via custom task: https://docs.microsoft.com/en-us/azure/devops/extend/develop/integrate-build-task?view=azure-devops
+
 #- task: CopyFiles@2
 #  inputs:
 #    contents: $(wksp)/LGs_pop1.txt
@@ -70,6 +72,11 @@ steps:
 - bash: |
     ls -latr $(Build.ArtifactStagingDirectory)
 
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathToPublish: $(Build.ArtifactStagingDirectory)
+    artifactName: MyBuildOutputs
+    
 - task: PublishTestResults@2
   inputs:
     testResultsFormat: 'JUnit'
