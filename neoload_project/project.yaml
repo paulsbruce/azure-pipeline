@@ -1,17 +1,27 @@
 name: NeoLoadAzureYAML
 
+sla_profiles:
+- name: external_calls_sla
+  thresholds:
+  - avg-resp-time warn >= 100ms fail >= 500ms per interval
+  - error-rate warn >= 2% fail >= 5% per test
+
 user_paths:
-- name: google_home
+- name: samples_home
   actions:
     steps:
-    - request:
-        url: https://www.google.com
-    - think_time: 1s
+    - transaction:
+      name: Sample Demo Home
+      steps:
+      - think_time: 1s
+      - request:
+          url: http://sampledemo.neotys.com
+          sla_profile: external_calls_sla
 
 populations:
 - name: pop1
   user_paths:
-  - name: google_home
+  - name: samples_home
 
 scenarios:
 - name: sanityScenario
