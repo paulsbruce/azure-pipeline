@@ -40,7 +40,7 @@ steps:
       -leaseLicense $(secret_license_id):50:1 \
       -report $(wksp)/neoload-report/report.html,$(wksp)/neoload-report/report.xml \
       -SLAJUnitResults $(wksp)/neoload-report/junit-sla-results.xml \
-      -L pop1=$(wksp)/LGs_pop1.txt
+      -L pop1=$(wksp)/LGs_pop1.txt \
       -noGUI \
       -nlweb \
       -nlwebToken $(nlw_token)
