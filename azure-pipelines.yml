@@ -36,6 +36,7 @@ steps:
     ls -latr
     apt install -y net-tools
     mkdir neoload-report
+    echo "lg1@Docker" > $(wksp)/LGs_pop1.txt
     /home/neoload/neoload/bin/NeoLoadCmd \
       -project $(wksp)/neoload_project/project.yaml \
       -launch sanityScenario \
@@ -45,6 +46,7 @@ steps:
       -leaseLicense $(secret_license_id):50:1 \
       -report $(wksp)/neoload-report/report.html,$(wksp)/neoload-report/report.xml \
       -SLAJUnitResults $(wksp)/neoload-report/junit-sla-results.xml \
+      -L pop1=$(wksp)/LGs_pop1.txt
       -noGUI \
       -nlweb \
       -nlwebToken $(nlw_token)
