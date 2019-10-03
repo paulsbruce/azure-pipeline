@@ -1,0 +1,4 @@
+FROM neotys/neoload-web-test-launcher:latest
+USER root
+
+RUN apk --update add bash shadow
