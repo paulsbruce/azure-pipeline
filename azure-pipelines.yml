@@ -56,7 +56,7 @@ steps:
     targetFolder: $(Build.ArtifactStagingDirectory)
 - task: CopyFiles@2
   inputs:
-    contents: 'neoload-report/junit-sla-results.xml'
+    contents: '$(wksp)/neoload-report/junit-sla-results.xml'
     targetFolder: $(Build.ArtifactStagingDirectory)
 
 - task: PublishTestResults@2
