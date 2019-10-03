@@ -41,6 +41,7 @@ steps:
       -report $(wksp)/neoload-report/report.html,$(wksp)/neoload-report/report.xml \
       -SLAJUnitResults $(wksp)/neoload-report/junit-sla-results.xml \
       -L pop1=$(wksp)/LGs_pop1.txt \
+      -exitCodeFailIgnore \
       -noGUI \
       -nlweb \
       -nlwebToken $(nlw_token)
