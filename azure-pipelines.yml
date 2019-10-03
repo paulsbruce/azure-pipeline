@@ -31,6 +31,7 @@ steps:
 - bash: |
     mkdir neoload-report
     echo "lg1@Docker" > $(wksp)/LGs_pop1.txt
+    
 - bash: |
     /home/neoload/neoload/bin/NeoLoadCmd \
       -project $(wksp)/neoload_project/project.yaml \
@@ -47,17 +48,17 @@ steps:
       -nlweb \
       -nlwebToken $(nlw_token)
 
-      mv $(wksp)/neoload-report/** $(Build.ArtifactStagingDirectory)
+#- task: CopyFiles@2
+#  inputs:
+#    contents: $(wksp)/LGs_pop1.txt
+#    targetFolder: $(Build.ArtifactStagingDirectory)
+#- task: CopyFiles@2
+#  inputs:
+#    contents: '$(wksp)/neoload-report/**'
+#    targetFolder: $(Build.ArtifactStagingDirectory)
 
-      ls -latr $(Build.ArtifactStagingDirectory)
-- task: CopyFiles@2
-  inputs:
-    contents: $(wksp)/LGs_pop1.txt
-    targetFolder: $(Build.ArtifactStagingDirectory)
-- task: CopyFiles@2
-  inputs:
-    contents: '$(wksp)/neoload-report/junit-sla-results.xml'
-    targetFolder: $(Build.ArtifactStagingDirectory)
+- bash: |
+    ls -latr $(Build.ArtifactStagingDirectory)
 
 - task: PublishTestResults@2
   inputs:
