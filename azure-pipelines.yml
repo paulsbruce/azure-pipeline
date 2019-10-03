@@ -3,15 +3,20 @@ trigger:
 
 variables:
   nlw_token: $(secret_nlw_token)
+  license_server_url: https://neoload-rest.saas.neotys.com:443/nts
+  license_server_login: $(secret_license_server_login)
+  license_id: $(secret_license_id)
+  zone_code: 9h2lZ
+  workspace: $(Pipeline.Workspace)
 
 resources:
   containers:
   - container: neoload_ctrl
     image: paulsbruce/neoload-controller-azure:latest
-    env: { MODE: Managed, NEOLOADWEB_TOKEN: $(nlw_token) }
+    env: { MODE: Managed, NEOLOADWEB_TOKEN: $(nlw_token), ZONE: $(zone_code) }
   - container: lg1
     image: neotys/neoload-loadgenerator:latest
-    env: { NEOLOADWEB_TOKEN: $(nlw_token) }
+    env: { NEOLOADWEB_TOKEN: $(nlw_token), ZONE: $(zone_code) }
     options: -p 7101:7100
 
 pool:
@@ -25,7 +30,22 @@ services:
 steps:
 - bash: |
     echo hello
+    echo $(workspace)
     pwd
     ls -latr
     apt install -y net-tools
-    ls -latr /home/neoload/neoload/bin
+    mkdir neoload-report
+    /home/neoload/neoload/bin/NeoLoadCmd \
+      -project $(workspace)/neoload_project/project.yaml \
+      -launch sanityScenario \
+      -testResultName 'Azure sanityScenario' \
+      -description 'Basic sanity check against Google' \
+      -NTS $(license_server_url) -NTSLogin $(secret_license_server_login) \
+      -leaseLicense $(secret_license_id):50:1 \
+      -report $(workspace)/neoload-report/report.html,$(workspace)/neoload-report/report.xml \
+      -SLAJUnitResults $(workspace)/neoload-report/junit-sla-results.xml \
+      -noGUI \
+      -nlweb \
+      -nlwebToken $(nlw_token)
+
+    sleep 30
