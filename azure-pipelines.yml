@@ -26,5 +26,6 @@ steps:
 - bash: |
     echo hello
     pwd
+    ls -latr
     apt install -y net-tools
-    nslookup lg1
+    ls -latr /home/neoload/neoload/bin
