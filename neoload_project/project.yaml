@@ -1,0 +1,25 @@
+name: NeoLoadAzureYAML
+
+user_paths:
+- name: google_home
+  actions:
+    steps:
+    - request:
+        url: https://www.google.com
+    - think_time: 1s
+
+populations:
+- name: pop1
+  user_paths:
+  - name: google_home
+
+scenarios:
+- name: sanityScenario
+  populations:
+  - name: pop1
+    rampup_load:
+      min_users: 1
+      max_users: 50
+      increment_users: 2
+      increment_every: 5s
+      duration: 5m
