@@ -48,6 +48,8 @@ steps:
       -nlweb \
       -nlwebToken $(nlw_token)
 
+      cp -R $(wksp)/neoload-report $(Build.ArtifactStagingDirectory)
+
 #- task: CopyFiles@2
 #  inputs:
 #    contents: $(wksp)/LGs_pop1.txt
@@ -63,5 +65,5 @@ steps:
 - task: PublishTestResults@2
   inputs:
     testResultsFormat: 'JUnit'
-    testResultsFiles: $(Build.ArtifactStagingDirectory)/junit-sla-results.xml 
+    testResultsFiles: $(Build.ArtifactStagingDirectory)/neoload-report/junit-sla-results.xml 
     failTaskOnFailedTests: true
