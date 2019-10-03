@@ -29,12 +29,6 @@ services:
 
 steps:
 - bash: |
-    echo hello
-    echo $(workspace)
-    echo $(wksp)
-    pwd
-    ls -latr
-    apt install -y net-tools
     mkdir neoload-report
     echo "lg1@Docker" > $(wksp)/LGs_pop1.txt
     /home/neoload/neoload/bin/NeoLoadCmd \
@@ -51,4 +45,8 @@ steps:
       -nlweb \
       -nlwebToken $(nlw_token)
 
-    sleep 30
+- task: PublishTestResults@2
+  inputs:
+    testResultsFormat: 'JUnit'
+    testResultsFiles: $(wksp)/neoload-report/junit-sla-results.xml 
+    failTaskOnFailedTests: true
