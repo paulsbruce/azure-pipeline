@@ -1,0 +1,6 @@
+FROM neotys/neoload-controller:latest
+USER root
+
+RUN apk --update add bash shadow
+
+ENTRYPOINT ["/bin/sh", "/home/neoload/entrypoint.sh"]
