@@ -11,12 +11,12 @@ user_paths:
   actions:
     steps:
     - transaction:
-      name: Sample Demo Home
-      steps:
-      - think_time: 1s
-      - request:
-          url: http://sampledemo.neotys.com
-          sla_profile: external_calls_sla
+        name: Sample Demo Home
+        steps:
+        - think_time: 1s
+        - request:
+            url: http://sampledemo.neotys.com
+            sla_profile: external_calls_sla
 
 populations:
 - name: pop1
