@@ -7,7 +7,7 @@ variables:
   license_server_login: $(secret_license_server_login)
   license_id: $(secret_license_id)
   zone_code: 9h2lZ
-  workspace: $(Pipeline.Workspace)
+  wksp: $(Pipeline.Workspace)/s
 
 resources:
   containers:
@@ -31,19 +31,22 @@ steps:
 - bash: |
     echo hello
     echo $(workspace)
+    echo $(wksp)
     pwd
     ls -latr
     apt install -y net-tools
     mkdir neoload-report
+    echo "lg1@Docker" > $(wksp)/LGs_pop1.txt
     /home/neoload/neoload/bin/NeoLoadCmd \
-      -project $(workspace)/neoload_project/project.yaml \
+      -project $(wksp)/neoload_project/project.yaml \
       -launch sanityScenario \
       -testResultName 'Azure sanityScenario' \
       -description 'Basic sanity check against Google' \
       -NTS $(license_server_url) -NTSLogin $(secret_license_server_login) \
       -leaseLicense $(secret_license_id):50:1 \
-      -report $(workspace)/neoload-report/report.html,$(workspace)/neoload-report/report.xml \
-      -SLAJUnitResults $(workspace)/neoload-report/junit-sla-results.xml \
+      -report $(wksp)/neoload-report/report.html,$(wksp)/neoload-report/report.xml \
+      -SLAJUnitResults $(wksp)/neoload-report/junit-sla-results.xml \
+      -L pop1=$(wksp)/LGs_pop1.txt
       -noGUI \
       -nlweb \
       -nlwebToken $(nlw_token)
