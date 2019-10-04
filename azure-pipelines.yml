@@ -53,7 +53,7 @@ steps:
 - bash: |
     ls -latr $(Build.ArtifactStagingDirectory)
 
-- task: CopyFiles@2
+- task: CopyFiles
   inputs:
     contents: 'neoload-report/**'
     targetFolder: $(Build.ArtifactStagingDirectory)
@@ -61,7 +61,7 @@ steps:
 - bash: |
     ls -latr $(Build.ArtifactStagingDirectory)
 
-- task: PublishTestResults@2
+- task: PublishTestResults
   inputs:
     testResultsFormat: 'JUnit'
     testResultsFiles: '**/neoload-report/junit-sla-results.xml'
