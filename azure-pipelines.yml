@@ -53,7 +53,7 @@ steps:
 - task: CopyFiles@2
   inputs:
     contents: 'neoload-report/**'
-    targetFolder: $(wksp)
+    targetFolder: /home/vsts/work/1/s/
 
 - bash: |
     ls -latr $(wksp)
