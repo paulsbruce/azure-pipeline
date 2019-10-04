@@ -53,13 +53,13 @@ steps:
 - task: CopyFiles@2
   inputs:
     contents: 'neoload-report/**'
-    targetFolder: $(Build.ArtifactStagingDirectory)
+    targetFolder: $(wksp)
 
 - bash: |
-    ls -latr $(Build.ArtifactStagingDirectory)
+    ls -latr $(wksp)
 
 - task: PublishTestResults@2
   inputs:
     testResultsFormat: 'JUnit'
-    testResultsFiles: '$(Build.ArtifactStagingDirectory)/neoload-report/junit-sla-results.xml'
+    testResultsFiles: '$(wksp)/neoload-report/junit-sla-results.xml'
     failTaskOnFailedTests: true
