@@ -33,33 +33,39 @@ steps:
     echo "lg1@Docker" > $(wksp)/LGs_pop1.txt
     
 - bash: |
-    /home/neoload/neoload/bin/NeoLoadCmd \
-      -project $(wksp)/neoload_project/project.yaml \
-      -launch sanityScenario \
-      -testResultName 'Azure sanityScenario' \
-      -description 'Basic sanity check against Google' \
-      -NTS $(license_server_url) -NTSLogin $(secret_license_server_login) \
-      -leaseLicense $(secret_license_id):50:1 \
-      -report $(wksp)/neoload-report/report.html,$(wksp)/neoload-report/report.xml \
-      -SLAJUnitResults $(wksp)/neoload-report/junit-sla-results.xml \
-      -L pop1=$(wksp)/LGs_pop1.txt \
-      -exitCodeFailIgnore \
-      -noGUI \
-      -nlweb \
-      -nlwebToken $(nlw_token)
+    echo "</ junit>" > $(wksp)/neoload-report/junit-sla-results.xml
+    
+#- bash: |
+#    /home/neoload/neoload/bin/NeoLoadCmd \
+#      -project $(wksp)/neoload_project/project.yaml \
+#      -launch sanityScenario \
+#      -testResultName 'Azure sanityScenario' \
+#      -description 'Basic sanity check against Google' \
+#      -NTS $(license_server_url) -NTSLogin $(secret_license_server_login) \
+#      -leaseLicense $(secret_license_id):50:1 \
+#      -report $(wksp)/neoload-report/report.html,$(wksp)/neoload-report/report.xml \
+#      -SLAJUnitResults $(wksp)/neoload-report/junit-sla-results.xml \
+#      -L pop1=$(wksp)/LGs_pop1.txt \
+#      -exitCodeFailIgnore \
+#      -noGUI \
+#      -nlweb \
+#      -nlwebToken $(nlw_token)
 
 # above could be improved via custom task: https://docs.microsoft.com/en-us/azure/devops/extend/develop/integrate-build-task?view=azure-devops
+
+- bash: |
+    ls -latr
 
 - task: CopyFiles@2
   inputs:
     contents: 'neoload-report/**'
-    targetFolder: /home/vsts/work/1/s/
+    targetFolder: $(System.DefaultWorkingDirectory)
 
 - bash: |
-    ls -latr $(wksp)
+    ls -latr $(System.DefaultWorkingDirectory)
 
 - task: PublishTestResults@2
   inputs:
     testResultsFormat: 'JUnit'
-    testResultsFiles: '$(wksp)/neoload-report/junit-sla-results.xml'
+    testResultsFiles: '$(System.DefaultWorkingDirectory)/neoload-report/junit-sla-results.xml'
     failTaskOnFailedTests: true
