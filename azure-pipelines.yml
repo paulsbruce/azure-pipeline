@@ -50,9 +50,6 @@ steps:
 
 # above could be improved via custom task: https://docs.microsoft.com/en-us/azure/devops/extend/develop/integrate-build-task?view=azure-devops
 
-- bash: |
-    ls -latr $(Build.ArtifactStagingDirectory)
-
 - task: CopyFiles
   inputs:
     contents: 'neoload-report/**'
@@ -64,5 +61,5 @@ steps:
 - task: PublishTestResults
   inputs:
     testResultsFormat: 'JUnit'
-    testResultsFiles: '**/neoload-report/junit-sla-results.xml'
+    testResultsFiles: '$(Build.ArtifactStagingDirectory)/neoload-report/junit-sla-results.xml'
     failTaskOnFailedTests: true
