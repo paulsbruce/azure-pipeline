@@ -1,5 +1,5 @@
-trigger:
-  - master
+#trigger:
+#  - master
 
 variables:
   nlw_token: $(secret_nlw_token)
@@ -48,18 +48,7 @@ steps:
       -nlweb \
       -nlwebToken $(nlw_token)
 
-      cp -R $(wksp)/neoload-report $(Build.ArtifactStagingDirectory)
-
 # above could be improved via custom task: https://docs.microsoft.com/en-us/azure/devops/extend/develop/integrate-build-task?view=azure-devops
-
-#- task: CopyFiles@2
-#  inputs:
-#    contents: $(wksp)/LGs_pop1.txt
-#    targetFolder: $(Build.ArtifactStagingDirectory)
-#- task: CopyFiles@2
-#  inputs:
-#    contents: '$(wksp)/neoload-report/**'
-#    targetFolder: $(Build.ArtifactStagingDirectory)
 
 - bash: |
     ls -latr $(Build.ArtifactStagingDirectory)
@@ -72,13 +61,8 @@ steps:
 - bash: |
     ls -latr $(Build.ArtifactStagingDirectory)
 
-- task: PublishBuildArtifacts@1
-  inputs:
-    pathToPublish: $(Build.ArtifactStagingDirectory)
-    artifactName: MyBuildOutputs
-    
 - task: PublishTestResults@2
   inputs:
     testResultsFormat: 'JUnit'
-    testResultsFiles: $(Build.ArtifactStagingDirectory)/neoload-report/junit-sla-results.xml 
+    testResultsFiles: '**/neoload-report/junit-sla-results.xml'
     failTaskOnFailedTests: true
