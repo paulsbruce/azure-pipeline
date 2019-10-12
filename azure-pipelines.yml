@@ -17,7 +17,7 @@ resources:
   - container: lg1
     image: neotys/neoload-loadgenerator:6.10
     env: { NEOLOADWEB_TOKEN: $(nlw_token), ZONE: $(zone_code) }
-    options: -p 7201:7100
+    options: -p 7101:7100
 
 pool:
   vmImage: 'ubuntu-16.04'
@@ -30,7 +30,7 @@ services:
 steps:
 - bash: |
     mkdir neoload-report
-    echo "lg1:7201@Docker" > $(wksp)/LGs_pop1.txt
+    echo "lg1:7101@Docker" > $(wksp)/LGs_pop1.txt
         
 - bash: |
     /home/neoload/neoload/bin/NeoLoadCmd \
