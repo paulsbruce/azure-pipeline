@@ -12,10 +12,10 @@ variables:
 resources:
   containers:
   - container: neoload_ctrl
-    image: paulsbruce/neoload-controller-azure:latest
+    image: paulsbruce/neoload-controller-azure:6.10
     env: { MODE: Managed, NEOLOADWEB_TOKEN: $(nlw_token), ZONE: $(zone_code) }
   - container: lg1
-    image: neotys/neoload-loadgenerator:latest
+    image: neotys/neoload-loadgenerator:6.10
     env: { NEOLOADWEB_TOKEN: $(nlw_token), ZONE: $(zone_code) }
     options: -p 7101:7100
 
