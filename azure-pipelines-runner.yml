@@ -1,0 +1,27 @@
+#trigger:
+#  - master
+
+variables:
+  nlw_token: $(secret_nlw_token)
+  zone_code: pimnV
+  wksp: $(Pipeline.Workspace)/s
+
+resources:
+  containers:
+  - container: neoload_runner
+    image: neotys/neoload-web-test-launcher
+    volumes:
+    - $(wksp)/neoload_project/Archive.zip:/data/dir
+    env: { 
+      NEOLOADWEB_TOKEN: $(nlw_token), 
+      CONTROLLER_ZONE_ID: $(zone_code), 
+      LG_ZONE_IDS: $(zone_code):1,
+      TEST_RESULT_NAME: Azure Runner,
+      SCENARIO_NAME: sanityScenario
+    }
+  
+
+pool:
+  vmImage: 'ubuntu-16.04'
+
+container: neoload_runner
