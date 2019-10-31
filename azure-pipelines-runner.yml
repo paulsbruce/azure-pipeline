@@ -15,7 +15,7 @@ resources:
     env: { 
       NEOLOADWEB_TOKEN: $(nlw_token), 
       CONTROLLER_ZONE_ID: $(zone_code), 
-      LG_ZONE_IDS: $(zone_code):1,
+      LG_ZONE_IDS: "$(zone_code):1",
       TEST_RESULT_NAME: Azure Runner,
       SCENARIO_NAME: sanityScenario
     }
