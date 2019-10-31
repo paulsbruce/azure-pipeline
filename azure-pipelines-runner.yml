@@ -5,13 +5,36 @@ variables:
   nlw_token: $(secret_nlw_token)
   zone_code: pimnV
   wksp: $(Pipeline.Workspace)/s
+  zip_file_url: "https://github.com/paulsbruce/neoload-as-code/raw/NewExamplesRuntime/projects/example_2_0_runtime/Archive.zip"
+
+stages:
+- stage: PullNLProject
+  displayName: Grab public sample NeoLoad project
+  jobs:
+  - job: Pull
+    displayName: Pull
+    pool:
+      vmImage: 'ubuntu-16.04'
+    steps:
+    - bash: |
+        mkdir $(wksp)/neoload_project
+        curl $(zip_file_url) --output $(wksp)/neoload_project/project.zip
+        
+- stage: Runner
+  displayName: Run NeoLoad project
+  jobs:
+  - job: Run
+    displayName: Run
+    pool:
+      vmImage: 'ubuntu-16.04'
+      container: neoload_runner
 
 resources:
   containers:
   - container: neoload_runner
     image: neotys/neoload-web-test-launcher
     volumes:
-    - $(wksp)/neoload_project/Archive.zip:/data/dir
+    - $(wksp)/neoload_project:/neoload-project
     env: { 
       NEOLOADWEB_TOKEN: $(nlw_token), 
       CONTROLLER_ZONE_ID: $(zone_code), 
@@ -19,9 +42,3 @@ resources:
       TEST_RESULT_NAME: Azure Runner,
       SCENARIO_NAME: sanityScenario
     }
-  
-
-pool:
-  vmImage: 'ubuntu-16.04'
-
-container: neoload_runner
