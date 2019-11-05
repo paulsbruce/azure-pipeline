@@ -52,10 +52,12 @@ steps:
 - task: CopyFiles@2
   inputs:
     contents: 'neoload-report/**'
-    targetFolder: $(System.DefaultWorkingDirectory)
+    targetFolder: /home/vsts/work/1/s/
+    #$(System.DefaultWorkingDirectory)
+    cleanTargetFolder: true
 
 - task: PublishTestResults@2
   inputs:
     testResultsFormat: 'JUnit'
-    testResultsFiles: '$(System.DefaultWorkingDirectory)/neoload-report/junit-sla-results.xml'
+    testResultsFiles: '/home/vsts/work/1/s/neoload-report/junit-sla-results.xml'
     failTaskOnFailedTests: true
