@@ -47,4 +47,5 @@ stages:
         uname
         ls -latr /
         ls -latr /usr/share/
+        which java
         java $JAVA_OPTS -jar /usr/share/neoload-web-test-launcher/neoload-web-test-launcher.jar
