@@ -45,4 +45,5 @@ stages:
     - bash: |
         uname
         ls -latr /
-        exec java $JAVA_OPTS -jar /usr/share/neoload-web-test-launcher/neoload-web-test-launcher.jar
+        ls -latr /usr/share/
+        java $JAVA_OPTS -jar /usr/share/neoload-web-test-launcher/neoload-web-test-launcher.jar
