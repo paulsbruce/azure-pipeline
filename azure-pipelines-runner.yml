@@ -27,10 +27,13 @@ stages:
     displayName: Run
     pool:
       vmImage: 'ubuntu-16.04'
-      container: neoload_runner
+    container: neoload_runner
     steps:
     - bash: |
+        uname
+        ls -latr /
         ls -latr /neoload-project
+        exec java $JAVA_OPTS -jar /usr/share/neoload-web-test-launcher/neoload-web-test-launcher.jar
 
 resources:
   containers:
