@@ -28,6 +28,9 @@ stages:
     pool:
       vmImage: 'ubuntu-16.04'
       container: neoload_runner
+    steps:
+    - bash: |
+        ls -latr /neoload-project
 
 resources:
   containers:
